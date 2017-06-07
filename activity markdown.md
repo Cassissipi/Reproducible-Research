@@ -1,8 +1,6 @@
 ---
 title: "Week 2 Assignment"
-output:
-  pdf_document: default
-  html_document: default
+output: github_document
 ---
 
 
