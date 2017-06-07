@@ -2,7 +2,8 @@
 title: "Week 2 Assignment"
 output: html_document
 ---
-# Week 2 Assignment
+
+
 ### This is an analysis looks at activity data from several brands of activity trackers. Results include the mean number of steps taken per day, daily activity patterns and differences between weekday and weekend activity. 
 
 ## Reading in Data
@@ -33,16 +34,17 @@ median(daysteps$steps, na.rm = TRUE)
 
 ## Plot of Steps per Interval
 ```{r, echo = TRUE}
-intervalsteps <- aggrgate(steps~interval, dat, mean)
-plot(intervalsteps$interval, intervalsteps$steps, type = "l", xlab = "Interval", ylab = "Mean Steps", main + "Mean Steps per Interval")
+intervalsteps <- aggregate(steps~interval, dat, mean)
+plot(intervalsteps$interval, intervalsteps$steps, type = "l", xlab = "Interval", ylab = "Mean Steps", main = "Mean Steps per Interval")
 ```
 
 ## Max 5 Minute Interval
 ```{r, echo = TRUE}
 max <- intervalsteps[which.max(intervalsteps$steps), 1]
+max
 ```
 
-## Number of rows that are NAs 
+## Number of rows is NAs 
 ```{r, echo = TRUE}
 sum(is.na(dat$steps))
 ```
@@ -51,40 +53,38 @@ sum(is.na(dat$steps))
 ```{r, echo = TRUE}
 datcopy <- dat
 mergy <- merge(datcopy, 
-               daymeansteps, 
+               daysteps, 
                by= "date", 
                suffixes = c(".dat", ".spd"))
 NAs <- which(is.na(datcopy$steps))
 datcopy[NAs, "steps"] <- mergy[NAs, "steps.spd"]
-meltdatcopy <- melt(datcopy, 
-                    "date", 
-                    "steps", 
-                    na.rm = FALSE)
+
 ```
 
 ## Calculating and plotting steps per day
 ```{r, echo = TRUE}
-datcopybyday<-aggregate(value~date + variable, meltdatcopy, sum)
+datcopybyday<-aggregate(steps~date, datcopy, sum)
 plot(datcopybyday$date, 
-     datcopybyday$value, 
+     datcopybyday$steps, 
      type = "h", 
      main = "Histogram of Daily Steps (New Nas)", 
      xlab = "Date", 
      ylab = "Steps", 
      col="blue", 
      lwd =8)
-median(datcopybyday$value)
-mean(datcopybyday$value)
+median(datcopybyday$steps)
+mean(datcopybyday$steps)
 ```
 
 
 ## Separating weekends from weekdays
+### Package "chron" required
 ```{r, echo = TRUE}
 library(chron)
-datcopy.with.days$weekend <- is.weekend(dat.with.days$date)
+datcopy$weekend <- is.weekend(datcopy$date)
 
-datcopy.with.weekday <- subset(datcopy.with.days, weekend == "FALSE")
-datcopy.with.weekend <- subset(datcopy.with.days, weekend =="TRUE")
+datcopy.with.weekday <- subset(datcopy, weekend == "FALSE")
+datcopy.with.weekend <- subset(datcopy, weekend =="TRUE")
 ```
 
 ## Calculating and plotting weekday and weekend step per interval
@@ -103,3 +103,4 @@ plot(weekendint$interval,
      xlab = "Weekend Interval", 
      ylab = "Steps")
 ```
+
