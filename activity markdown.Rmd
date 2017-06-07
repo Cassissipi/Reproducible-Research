@@ -2,7 +2,7 @@
 title: "Week 2 Assignment"
 output: html_document
 ---
-#Week 2 Assignment
+# Week 2 Assignment
 ### This is an analysis looks at activity data from several brands of activity trackers. Results include the mean number of steps taken per day, daily activity patterns and differences between weekday and weekend activity. 
 
 ## Reading in Data
@@ -42,12 +42,12 @@ plot(intervalsteps$interval, intervalsteps$steps, type = "l", xlab = "Interval",
 max <- intervalsteps[which.max(intervalsteps$steps), 1]
 ```
 
-## Number of rows is NAs 
+## Number of rows that are NAs 
 ```{r, echo = TRUE}
 sum(is.na(dat$steps))
 ```
 
-##Imputing missing values 
+## Imputing missing values 
 ```{r, echo = TRUE}
 datcopy <- dat
 mergy <- merge(datcopy, 
@@ -62,7 +62,7 @@ meltdatcopy <- melt(datcopy,
                     na.rm = FALSE)
 ```
 
-##Calculating and plotting steps per day
+## Calculating and plotting steps per day
 ```{r, echo = TRUE}
 datcopybyday<-aggregate(value~date + variable, meltdatcopy, sum)
 plot(datcopybyday$date, 
@@ -78,7 +78,7 @@ mean(datcopybyday$value)
 ```
 
 
-##Separating weekends from weekdays
+## Separating weekends from weekdays
 ```{r, echo = TRUE}
 library(chron)
 datcopy.with.days$weekend <- is.weekend(dat.with.days$date)
@@ -87,7 +87,7 @@ datcopy.with.weekday <- subset(datcopy.with.days, weekend == "FALSE")
 datcopy.with.weekend <- subset(datcopy.with.days, weekend =="TRUE")
 ```
 
-##Calculating and plotting weekday and weekend step per interval
+## Calculating and plotting weekday and weekend step per interval
 ```{r, echo = TRUE}
 weekdayint <- aggregate(steps~interval, datcopy.with.weekday, mean)
 weekendint <- aggregate(steps~interval, datcopy.with.weekend, mean)
