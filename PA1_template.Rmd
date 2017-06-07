@@ -1,6 +1,6 @@
 ---
 title: "Week 2 Assignment"
-output: html_document
+output: github_document
 ---
 
 
