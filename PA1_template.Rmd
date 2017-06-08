@@ -1,8 +1,7 @@
 ---
-title: "Week 2 Assignment"
+title: "Week Assignment"
 output: github_document
 ---
-
 
 ### This is an analysis looks at activity data from several brands of activity trackers. Results include the mean number of steps taken per day, daily activity patterns and differences between weekday and weekend activity. 
 
@@ -103,4 +102,3 @@ plot(weekendint$interval,
      xlab = "Weekend Interval", 
      ylab = "Steps")
 ```
-
